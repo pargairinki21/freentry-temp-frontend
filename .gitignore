@@ -1,0 +1,14 @@
+# Ignore local firebase config (IMPORTANT)
+src/config/config.js
+
+# If you renamed it
+src/config/config.local.js
+
+# Mac system files
+.DS_Store
+
+# Logs
+*.log
+
+# VS Code settings (optional)
+.vscode/

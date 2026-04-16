@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Freentry — Auth Console</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./src/styles/main.css"/>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <div class="container">
+
+    <div style="position:absolute; top:20px; right:20px;">
+      <select id="env-select" class="btn">
+        <option value="dev">Dev</option>
+        <option value="prod">Prod</option>
+      </select>
+    </div>
+
+    <div class="brand">
+      <div class="brand-logo">Firebase Auth Console</div>
+      <div class="brand-title">Free<span>ntry</span></div>
+      <div class="brand-sub">// token &amp; uid inspector v1.0</div>
+    </div>
+
+    <div class="card">
+
+      <div class="tabs">
+        <button class="tab active" data-tab="login">Sign In</button>
+        <button class="tab" data-tab="signup">Sign Up</button>
+      </div>
+
+      <div class="panel active" id="panel-login">
+        <button class="btn btn-ghost" id="btn-login-google">
+          <svg width="16" height="16" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M5.26 9.77A7.2 7.2 0 0 1 12 4.8c1.74 0 3.3.63 4.52 1.66l3.37-3.37A11.97 11.97 0 0 0 12 .01C7.31.01 3.26 2.7 1.28 6.66l3.98 3.11z"/>
+            <path fill="#34A853" d="M16.04 18.01A7.22 7.22 0 0 1 12 19.2c-2.99 0-5.56-1.82-6.74-4.44l-3.98 3.11C3.26 21.3 7.31 24 12 24c2.95 0 5.76-1.07 7.86-2.97l-3.82-3.02z"/>
+            <path fill="#FBBC05" d="M19.86 21.03A11.96 11.96 0 0 0 24 12c0-.8-.08-1.57-.22-2.32H12v4.64h6.75a5.76 5.76 0 0 1-2.53 3.37l3.64 3.34z"/>
+            <path fill="#4285F4" d="M1.28 6.66A11.96 11.96 0 0 0 0 12c0 1.87.43 3.64 1.28 5.19l3.98-3.11A7.18 7.18 0 0 1 4.8 12c0-.73.11-1.43.3-2.09L1.28 6.66z"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <div class="divider"><span>or phone</span></div>
+
+        <div id="msg-login" class="msg"></div>
+
+        <div id="step-phone">
+          <div class="field">
+            <label for="login-phone">Phone Number</label>
+            <input type="tel" id="login-phone" placeholder="+919876543210"/>
+            <div class="field-hint">Include country code (E.164 format)</div>
+          </div>
+          <button class="btn" id="btn-send-otp">Send OTP →</button>
+        </div>
+
+        <div id="step-otp" style="display:none;">
+          <div class="field">
+            <label for="login-otp">Enter OTP</label>
+            <input type="text" id="login-otp" placeholder="6-digit code" maxlength="6" inputmode="numeric"/>
+          </div>
+          <button class="btn" id="btn-verify-otp">Verify &amp; Sign In →</button>
+        </div>
+
+        <div class="separator"></div>
+
+        <button class="btn btn-ghost" id="btn-login-anon" style="margin-bottom:0;">
+          ⚡ Continue Anonymously
+        </button>
+      </div>
+
+      <div class="panel" id="panel-signup">
+        <div id="msg-signup" class="msg"></div>
+
+        <div class="field">
+          <label for="signup-name">Display Name (optional)</label>
+          <input type="text" id="signup-name" placeholder="Your Name"/>
+        </div>
+
+        <div id="signup-step-phone">
+          <div class="field">
+            <label for="signup-phone">Phone Number</label>
+            <input type="tel" id="signup-phone" placeholder="+919876543210"/>
+            <div class="field-hint">Include country code (E.164 format)</div>
+          </div>
+          <button class="btn" id="btn-signup-send-otp">Send OTP →</button>
+        </div>
+
+        <div id="signup-step-otp" style="display:none;">
+          <div class="field">
+            <label for="signup-otp">Enter OTP</label>
+            <input type="text" id="signup-otp" placeholder="6-digit code" maxlength="6" inputmode="numeric"/>
+          </div>
+          <button class="btn" id="btn-signup-verify-otp">Verify &amp; Create Account →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="token-card" id="token-card">
+      <div class="token-header">
+        <div class="token-title">✓ Authenticated</div>
+        <div class="status-dot"></div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-label">UID</div>
+        <div class="info-value" id="out-uid">—</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Display Name</div>
+        <div class="info-value" id="out-name">—</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Phone / Email</div>
+        <div class="info-value" id="out-email">—</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Provider</div>
+        <div class="info-value" id="out-provider">—</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Phone Verified</div>
+        <div class="info-value" id="out-verified">—</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">ID Token (JWT)</div>
+        <div class="token-box" id="out-token">—</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Refresh Token</div>
+        <div class="token-box" id="out-refresh">—</div>
+      </div>
+
+      <div class="copy-row">
+        <button class="btn-action teal" id="btn-copy-token">Copy Token</button>
+        <button class="btn-action teal" id="btn-copy-uid">Copy UID</button>
+        <button class="btn-action red" id="btn-signout">Sign Out</button>
+      </div>
+      <div class="refresh-row">
+        <button class="btn-action orange" id="btn-refresh-token">↻ Refresh ID Token</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
