@@ -12,26 +12,23 @@
 
   <div class="container">
 
-    <div style="position:absolute; top:20px; right:20px;">
-      <select id="env-select" class="btn">
-        <option value="dev">Dev</option>
-        <option value="prod">Prod</option>
-      </select>
-    </div>
-
+    <!-- Brand -->
     <div class="brand">
       <div class="brand-logo">Firebase Auth Console</div>
       <div class="brand-title">Free<span>ntry</span></div>
       <div class="brand-sub">// token &amp; uid inspector v1.0</div>
     </div>
 
+    <!-- Auth Card -->
     <div class="card">
 
+      <!-- Tabs -->
       <div class="tabs">
         <button class="tab active" data-tab="login">Sign In</button>
-        <button class="tab" data-tab="signup">Sign Up</button>
+        <button class="tab"        data-tab="signup">Sign Up</button>
       </div>
 
+      <!-- Login Panel -->
       <div class="panel active" id="panel-login">
         <button class="btn btn-ghost" id="btn-login-google">
           <svg width="16" height="16" viewBox="0 0 24 24">
@@ -47,6 +44,7 @@
 
         <div id="msg-login" class="msg"></div>
 
+        <!-- Step 1: Phone number -->
         <div id="step-phone">
           <div class="field">
             <label for="login-phone">Phone Number</label>
@@ -56,6 +54,7 @@
           <button class="btn" id="btn-send-otp">Send OTP →</button>
         </div>
 
+        <!-- Step 2: OTP (hidden until sent) -->
         <div id="step-otp" style="display:none;">
           <div class="field">
             <label for="login-otp">Enter OTP</label>
@@ -71,6 +70,7 @@
         </button>
       </div>
 
+      <!-- Signup Panel -->
       <div class="panel" id="panel-signup">
         <div id="msg-signup" class="msg"></div>
 
@@ -79,6 +79,7 @@
           <input type="text" id="signup-name" placeholder="Your Name"/>
         </div>
 
+        <!-- Step 1: Phone number -->
         <div id="signup-step-phone">
           <div class="field">
             <label for="signup-phone">Phone Number</label>
@@ -88,6 +89,7 @@
           <button class="btn" id="btn-signup-send-otp">Send OTP →</button>
         </div>
 
+        <!-- Step 2: OTP (hidden until sent) -->
         <div id="signup-step-otp" style="display:none;">
           <div class="field">
             <label for="signup-otp">Enter OTP</label>
@@ -97,8 +99,9 @@
         </div>
       </div>
 
-    </div>
+    </div><!-- /card -->
 
+    <!-- Token Result Card (shown after auth) -->
     <div class="token-card" id="token-card">
       <div class="token-header">
         <div class="token-title">✓ Authenticated</div>
@@ -137,14 +140,14 @@
       <div class="copy-row">
         <button class="btn-action teal" id="btn-copy-token">Copy Token</button>
         <button class="btn-action teal" id="btn-copy-uid">Copy UID</button>
-        <button class="btn-action red" id="btn-signout">Sign Out</button>
+        <button class="btn-action red"  id="btn-signout">Sign Out</button>
       </div>
       <div class="refresh-row">
         <button class="btn-action orange" id="btn-refresh-token">↻ Refresh ID Token</button>
       </div>
     </div>
 
-  </div>
+  </div><!-- /container -->
 
   <script type="module" src="./src/main.js"></script>
 </body>
